@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Latihan RPL - PBO dan PHP</title>
+  <title>Latihan Kisi-Kisi XI</title>
   <style>
     :root {
       --bg: #f5f3ed;
@@ -523,10 +523,10 @@
   <div class="app">
     <aside class="sidebar">
       <div class="brand">
-        <div class="brand-mark">RPL</div>
+        <div class="brand-mark">XI</div>
         <div>
-          <h1>Latihan PBO dan PHP</h1>
-          <p>Bank soal dari materi PowerPoint.</p>
+          <h1>Latihan Kisi-Kisi XI</h1>
+          <p>Bank soal dari materi di folder ini.</p>
         </div>
       </div>
 
@@ -548,9 +548,9 @@
     <main class="main">
       <section class="topbar">
         <div>
-          <p class="eyebrow">XI RPL 2</p>
+          <p class="eyebrow">Kelas XI</p>
           <h2>Latihan soal yang tidak sekadar menebak.</h2>
-          <p>Ambil materi dari PBO dasar, PBO lanjutan, studi kasus Java, dan PHP. Jawab, cek pembahasan, lalu lanjut sampai konsepnya benar-benar masuk.</p>
+          <p>Ambil materi dari RPL, Bahasa Inggris, Pancasila, dan Sejarah. Jawab, cek pembahasan, lalu lanjut sampai konsepnya benar-benar masuk.</p>
         </div>
         <div class="score-box" aria-live="polite">
           <span class="number" id="scoreValue">0</span>
@@ -585,20 +585,20 @@
             <h3>Ringkasan cepat</h3>
             <div class="concept-map" aria-hidden="true">
               <div class="concept-node">
-                <span>Object</span>
-                <strong>data + perilaku</strong>
+                <span>RPL</span>
+                <strong>PBO + PHP</strong>
               </div>
               <div class="concept-node">
-                <span>PHP</span>
-                <strong>server side</strong>
+                <span>English</span>
+                <strong>grammar + reading</strong>
               </div>
               <div class="concept-node">
-                <span>CRUD</span>
-                <strong>kelola data</strong>
+                <span>Pancasila</span>
+                <strong>harmoni + negara</strong>
               </div>
               <div class="concept-node">
-                <span>Database</span>
-                <strong>MySQL</strong>
+                <span>Sejarah</span>
+                <strong>awal kemerdekaan</strong>
               </div>
             </div>
             <ul class="lesson-list" id="lessonList"></ul>
@@ -617,13 +617,13 @@
     const modules = {
       all: {
         label: "Semua materi",
-        summary: "Campuran PBO dasar, PBO lanjutan, studi kasus Java, dan PHP.",
+        summary: "Campuran RPL, Bahasa Inggris, Pancasila, dan Sejarah dari dokumen di folder ini.",
         lessons: [
-          ["PBO", "Program dibuat dengan meniru objek dunia nyata."],
-          ["Class", "Cetakan yang mendeskripsikan atribut dan method."],
-          ["Object", "Hasil nyata dari class, memiliki data sendiri."],
-          ["PHP", "Bahasa server side untuk website dinamis."],
-          ["CRUD", "Create, Read, Update, Delete untuk pengolahan data."]
+          ["RPL", "PBO memakai object, PHP memproses website di server."],
+          ["English", "Banyak soal membahas comparison, passive voice, dan reading."],
+          ["Pancasila", "Fokus pada harmoni keberagaman dan sistem pemerintahan."],
+          ["Sejarah", "Fokus pada perjuangan mempertahankan kemerdekaan Indonesia."],
+          ["Latihan", "Jawab soal, baca pembahasan, lalu ulang bagian yang masih lemah."]
         ]
       },
       pbo: {
@@ -668,6 +668,39 @@
           ["GET", "Data terlihat di URL, cocok untuk pencarian."],
           ["POST", "Data tidak terlihat di URL, cocok untuk login."],
           ["mysqli_query", "Menjalankan perintah SQL dari PHP ke MySQL."]
+        ]
+      },
+      english: {
+        label: "Bahasa Inggris",
+        summary: "Latihan comparative-superlative, simple present, passive voice, dan reading comprehension.",
+        lessons: [
+          ["Comparative", "Gunakan more atau akhiran -er untuk membandingkan dua hal."],
+          ["Superlative", "Gunakan the most atau akhiran -est untuk paling di antara banyak."],
+          ["Simple present", "Subjek orang ketiga tunggal memakai verb + s/es."],
+          ["Passive voice", "Pola lampau: was/were + past participle."],
+          ["Reading", "Cari jawaban dari informasi eksplisit dalam teks."]
+        ]
+      },
+      pancasila: {
+        label: "Pancasila",
+        summary: "Latihan harmoni dalam keberagaman, konflik sosial, bentuk negara, dan sistem pemerintahan.",
+        lessons: [
+          ["Keberagaman", "Perbedaan perlu dikelola dengan toleransi dan komunikasi."],
+          ["Konflik", "Prasangka, diskriminasi, dan ketidakadilan dapat memicu konflik."],
+          ["Mediasi", "Pihak ketiga membantu dialog tanpa memutuskan sepihak."],
+          ["Negara kesatuan", "Kekuasaan utama berada pada pemerintah pusat."],
+          ["Presidensial", "Presiden menjadi kepala negara sekaligus kepala pemerintahan."]
+        ]
+      },
+      sejarah: {
+        label: "Sejarah",
+        summary: "Latihan masa awal kemerdekaan, perjuangan fisik, diplomasi, dan pengakuan kedaulatan.",
+        lessons: [
+          ["Romusa", "Pengerahan tenaga kerja mengganggu ekonomi desa."],
+          ["Pertempuran", "Surabaya, Ambarawa, Bandung, Medan, dan Margarana menjadi contoh perjuangan fisik."],
+          ["BKR/TKR", "Organisasi keamanan berkembang menjadi tentara nasional."],
+          ["Diplomasi", "Indonesia juga berjuang lewat perundingan dan pengakuan internasional."],
+          ["RIS", "Bentuk federal tidak bertahan lama karena rakyat menghendaki negara kesatuan."]
         ]
       }
     };
@@ -1096,6 +1129,326 @@
         options: ["Agar hanya data tertentu yang diubah atau dihapus", "Agar semua data berubah sekaligus", "Agar PHP berjalan di browser", "Agar form otomatis memakai GET"],
         answer: 0,
         explain: "Tanpa WHERE, UPDATE dapat mengubah semua data dan DELETE dapat menghapus seluruh data."
+      },
+      {
+        module: "english",
+        level: "Dasar",
+        q: "Rina says: I think the red shirt is ... than the others. Which phrase is correct?",
+        options: ["more suitable", "suitabler", "the most suitable", "as suitable as"],
+        answer: 0,
+        explain: "Suitable memakai pola comparative dengan more, sehingga jawabannya more suitable."
+      },
+      {
+        module: "english",
+        level: "Dasar",
+        q: "He played ... than before. Which adverb comparison is correct?",
+        options: ["more carefully", "carefully", "the most carefully", "as carefully"],
+        answer: 0,
+        explain: "Carefully adalah adverb panjang, jadi bentuk comparative-nya more carefully."
+      },
+      {
+        module: "english",
+        level: "Dasar",
+        q: "TV has audio and visual system. So TV is ... than radio.",
+        options: ["more interesting", "less interesting", "as bad as", "the worst"],
+        answer: 0,
+        explain: "Kalimatnya menyatakan TV lebih menarik daripada radio, maka more interesting than."
+      },
+      {
+        module: "english",
+        level: "Dasar",
+        q: "Motorcycle will be better because it is ... than bike.",
+        options: ["faster", "fast", "slower", "as slow"],
+        answer: 0,
+        explain: "Perbandingan dua kendaraan memakai comparative faster than."
+      },
+      {
+        module: "english",
+        level: "Menengah",
+        q: "Chicken crispy costs Rp12.500 and chicken porridge costs Rp15.000. Chicken porridge is ... expensive than chicken crispy.",
+        options: ["more", "less", "the least", "the most"],
+        answer: 0,
+        explain: "Rp15.000 lebih mahal daripada Rp12.500, jadi bentuknya more expensive than."
+      },
+      {
+        module: "english",
+        level: "Dasar",
+        q: "Based on the Moro Moro Resto table, which food is the most expensive?",
+        options: ["Fried rice", "Steamed rice", "Chicken porridge", "Chicken crispy"],
+        answer: 0,
+        explain: "Fried rice Rp20.000, lebih mahal daripada makanan lain pada tabel."
+      },
+      {
+        module: "english",
+        level: "Dasar",
+        q: "Clara ... flowers every day.",
+        options: ["buys", "buy", "buying", "bought"],
+        answer: 0,
+        explain: "Clara adalah orang ketiga tunggal, jadi simple present memakai buys."
+      },
+      {
+        module: "english",
+        level: "Menengah",
+        q: "The cake ... by Jennifer yesterday.",
+        options: ["was bought", "was buys", "is buying", "am bought"],
+        answer: 0,
+        explain: "Passive voice lampau memakai was/were + past participle, yaitu was bought."
+      },
+      {
+        module: "english",
+        level: "Menengah",
+        q: "What is the main concern of Rameama and her tribe?",
+        options: ["Protecting their land and the rainforest", "Gaining power and resources", "Leaving their home", "Ignoring the threat"],
+        answer: 0,
+        explain: "Dialog menyebut mereka harus melindungi tanah dan hutan hujan dari developer."
+      },
+      {
+        module: "english",
+        level: "Menengah",
+        q: "According to Rameama, what is the tribe's strength?",
+        options: ["Their unity and connection to the land", "Their wealth and resources", "Their modern technology", "Their plan to exploit the forest"],
+        answer: 0,
+        explain: "Rameama mengatakan kekuatan mereka adalah persatuan dan hubungan dengan tanah mereka."
+      },
+      {
+        module: "english",
+        level: "Dasar",
+        q: "In the story A Day with a Flat Tire, what did Arif want to do all week?",
+        options: ["Ride his bike to the park", "Go swimming", "Play video games", "Visit his grandparents"],
+        answer: 0,
+        explain: "Teks menyebut Arif sudah menantikan naik sepeda ke taman sepanjang minggu."
+      },
+      {
+        module: "english",
+        level: "Dasar",
+        q: "Who helped Arif fix his flat tire?",
+        options: ["His neighbor, Mr. Hasan", "His father", "His teacher", "A police officer"],
+        answer: 0,
+        explain: "Mr. Hasan melihat ban Arif kempis dan membantunya memperbaiki di garasi."
+      },
+      {
+        module: "english",
+        level: "Menengah",
+        q: "What is the message of the poster phrase Less Plastic, More Turtles?",
+        options: ["Reduce plastic waste to protect turtles", "Plastic is good for turtles", "Turtles eat plastic to survive", "Use more plastic in the ocean"],
+        answer: 0,
+        explain: "Pesannya adalah mengurangi sampah plastik karena plastik mengancam keselamatan penyu."
+      },
+      {
+        module: "pancasila",
+        level: "Dasar",
+        q: "Apa yang dapat terjadi jika masyarakat gagal memahami keberagaman?",
+        options: ["Ketegangan dan konflik antar-kelompok", "Peningkatan solidaritas antar-kelompok", "Kerja sama yang makin kuat", "Meningkatnya rasa hormat terhadap perbedaan"],
+        answer: 0,
+        explain: "Kegagalan memahami keberagaman dapat memicu prasangka, ketegangan, dan konflik."
+      },
+      {
+        module: "pancasila",
+        level: "Dasar",
+        q: "Salah satu faktor pendorong harmoni dalam keberagaman adalah...",
+        options: ["Pendidikan yang mengajarkan toleransi dan saling menghormati", "Komunikasi tertutup antar kelompok", "Pemahaman rendah terhadap budaya lain", "Kebijakan diskriminatif"],
+        answer: 0,
+        explain: "Pendidikan toleransi membantu masyarakat menghargai perbedaan."
+      },
+      {
+        module: "pancasila",
+        level: "Menengah",
+        q: "Faktor yang menghambat harmoni dalam keberagaman adalah...",
+        options: ["Kecemburuan sosial akibat ketidakadilan distribusi sumber daya", "Kesetaraan hak dan kesempatan", "Komunikasi terbuka", "Pemimpin yang mempromosikan toleransi"],
+        answer: 0,
+        explain: "Ketidakadilan distribusi sumber daya dapat menimbulkan kecemburuan sosial."
+      },
+      {
+        module: "pancasila",
+        level: "Dasar",
+        q: "Peran media yang tepat untuk mendorong harmoni adalah...",
+        options: ["Menyebarkan informasi yang mendorong saling pengertian dan inklusi", "Memperkuat stereotipe", "Mendorong diskriminasi", "Menghapus nilai budaya lokal"],
+        answer: 0,
+        explain: "Media seharusnya membantu pemahaman dan inklusi, bukan memperbesar prasangka."
+      },
+      {
+        module: "pancasila",
+        level: "Menengah",
+        q: "Mengapa mediasi dengan pihak ketiga sering dipakai dalam penyelesaian konflik?",
+        options: ["Pihak ketiga memfasilitasi dialog tanpa memberi keputusan sepihak", "Pihak ketiga mengambil alih konflik", "Pihak ketiga mendorong kekerasan", "Pihak ketiga selalu menjadi hakim"],
+        answer: 0,
+        explain: "Mediasi membantu pihak yang berkonflik berdialog dan mencari solusi bersama."
+      },
+      {
+        module: "pancasila",
+        level: "Dasar",
+        q: "Bentuk pemerintahan Indonesia adalah...",
+        options: ["Republik", "Monarki absolut", "Oligarki", "Federalisme"],
+        answer: 0,
+        explain: "Indonesia berbentuk republik, dengan presiden sebagai kepala negara."
+      },
+      {
+        module: "pancasila",
+        level: "Dasar",
+        q: "Indonesia menganut bentuk negara...",
+        options: ["Kesatuan", "Federal", "Federasi", "Monarki absolut"],
+        answer: 0,
+        explain: "Indonesia adalah Negara Kesatuan Republik Indonesia."
+      },
+      {
+        module: "pancasila",
+        level: "Menengah",
+        q: "Dalam sistem presidensial Indonesia, presiden memiliki kedudukan sebagai...",
+        options: ["Kepala negara dan kepala pemerintahan", "Kepala legislatif", "Kepala kehakiman", "Perdana menteri"],
+        answer: 0,
+        explain: "Sistem presidensial menempatkan presiden sebagai kepala negara sekaligus kepala pemerintahan."
+      },
+      {
+        module: "pancasila",
+        level: "Menengah",
+        q: "Ciri negara kesatuan adalah...",
+        options: ["Pemerintah pusat mengendalikan kebijakan utama", "Setiap daerah memiliki kepala negara sendiri", "Negara bagian punya kedaulatan penuh", "Setiap daerah membuat konstitusi sendiri"],
+        answer: 0,
+        explain: "Dalam negara kesatuan, kedaulatan utama berada pada pemerintah pusat."
+      },
+      {
+        module: "pancasila",
+        level: "Dasar",
+        q: "Pada sistem pemerintahan Indonesia, DPR berfungsi sebagai...",
+        options: ["Lembaga legislatif", "Lembaga eksekutif", "Lembaga yudikatif", "Lembaga monarki"],
+        answer: 0,
+        explain: "DPR berperan sebagai lembaga legislatif, terutama dalam fungsi legislasi, anggaran, dan pengawasan."
+      },
+      {
+        module: "pancasila",
+        level: "Menengah",
+        q: "Konflik berbasis identitas seperti agama atau etnis sering terjadi karena...",
+        options: ["Kurangnya pemahaman dan penghargaan terhadap perbedaan", "Terlalu banyak kesamaan antar kelompok", "Dukungan penuh pihak luar", "Berkurangnya rasa nasionalisme saja"],
+        answer: 0,
+        explain: "Konflik identitas biasanya diperkuat oleh rendahnya penghargaan terhadap perbedaan."
+      },
+      {
+        module: "pancasila",
+        level: "Dasar",
+        q: "Ketika kelompok mayoritas merasa superior terhadap minoritas, sikap itu sering disebut...",
+        options: ["Diskriminasi", "Toleransi", "Keadilan sosial", "Inklusivitas"],
+        answer: 0,
+        explain: "Merasa lebih tinggi lalu memperlakukan kelompok lain tidak setara merupakan diskriminasi."
+      },
+      {
+        module: "sejarah",
+        level: "Dasar",
+        q: "Dampak pengerahan romusa oleh Jepang terhadap perekonomian desa adalah...",
+        options: ["Perekonomian desa terganggu karena banyak petani menjadi romusa", "Perekonomian desa maju pesat", "Desa menjadi lebih mandiri", "Jumlah pekerja desa bertambah"],
+        answer: 0,
+        explain: "Pengerahan romusa mengambil banyak tenaga laki-laki dari desa, sehingga kegiatan ekonomi terganggu."
+      },
+      {
+        module: "sejarah",
+        level: "Menengah",
+        q: "Kolonel Sudirman memimpin Pertempuran Ambarawa dengan strategi...",
+        options: ["Supit Urang", "Bumi hangus", "Puputan", "Benteng Stelsel"],
+        answer: 0,
+        explain: "Strategi Supit Urang digunakan untuk mengepung dan menekan pasukan lawan di Ambarawa."
+      },
+      {
+        module: "sejarah",
+        level: "Dasar",
+        q: "Tujuan utama operasi bumi hangus terhadap Kota Bandung adalah...",
+        options: ["Mencegah Bandung dijadikan basis militer atau markas Sekutu", "Menghancurkan semua rumah penduduk", "Mengundang bantuan Jepang", "Memindahkan ibu kota ke Bandung"],
+        answer: 0,
+        explain: "Bandung dibumihanguskan agar tidak dapat dimanfaatkan Sekutu sebagai basis militer."
+      },
+      {
+        module: "sejarah",
+        level: "Dasar",
+        q: "Istilah puputan dalam Perang Margarana berarti...",
+        options: ["Perang sampai mati dan tidak menyerahkan diri kepada musuh", "Perang di lapangan terbuka saja", "Bunuh diri massal saat ditangkap", "Menyerang lalu langsung lari"],
+        answer: 0,
+        explain: "Puputan berarti perjuangan habis-habisan sampai titik terakhir."
+      },
+      {
+        module: "sejarah",
+        level: "Menengah",
+        q: "Isi ultimatum Sekutu yang memicu peristiwa 10 November 1945 di Surabaya adalah...",
+        options: ["Para pemimpin dan rakyat Surabaya harus menyerah kepada Sekutu", "Rakyat harus menerima pemerintahan Jepang", "Bendera Merah Putih wajib diturunkan selamanya", "Semua sekolah harus ditutup"],
+        answer: 0,
+        explain: "Ultimatum Sekutu menuntut penyerahan, tetapi rakyat Surabaya memilih melawan."
+      },
+      {
+        module: "sejarah",
+        level: "Menengah",
+        q: "Pemindahan ibu kota RI ke Yogyakarta dilakukan untuk...",
+        options: ["Mengamankan pemerintahan republik dari gangguan NICA", "Menghindari serangan Jepang", "Mengalihkan perhatian rakyat", "Membubarkan pemerintahan pusat"],
+        answer: 0,
+        explain: "Yogyakarta dipilih agar pemerintahan republik tetap berjalan lebih aman dari gangguan NICA."
+      },
+      {
+        module: "sejarah",
+        level: "Dasar",
+        q: "Insiden Bendera di Hotel Yamato menunjukkan bahwa para pemuda memiliki...",
+        options: ["Semangat juang tinggi dalam membela negara", "Persenjataan modern lengkap", "Dukungan negara tetangga", "Dana besar dari Sekutu"],
+        answer: 0,
+        explain: "Perobekan warna biru bendera Belanda menunjukkan semangat mempertahankan Merah Putih."
+      },
+      {
+        module: "sejarah",
+        level: "Dasar",
+        q: "Peristiwa di Hotel Jalan Bali, Medan menjadi salah satu penyebab terjadinya...",
+        options: ["Pertempuran Medan Area", "Bandung Lautan Api", "Pertempuran Ambarawa", "Insiden Hotel Yamato"],
+        answer: 0,
+        explain: "Penghinaan terhadap lencana Merah Putih di Medan memicu ketegangan yang berkembang menjadi Pertempuran Medan Area."
+      },
+      {
+        module: "sejarah",
+        level: "Menengah",
+        q: "Isi Piagam Atlantik yang berkaitan dengan semangat proklamasi Indonesia adalah...",
+        options: ["Hak setiap bangsa untuk merdeka dan menentukan nasib sendiri", "Penyatuan koloni dengan penjajah", "Pembagian wilayah pascaperang", "Larangan menyebarkan kemerdekaan"],
+        answer: 0,
+        explain: "Piagam Atlantik memuat gagasan hak menentukan nasib sendiri yang sejalan dengan anti-kolonialisme."
+      },
+      {
+        module: "sejarah",
+        level: "Dasar",
+        q: "Pasukan Sekutu mendarat di Indonesia pada 15 September 1945 di...",
+        options: ["Tanjung Priok", "Banten", "Surabaya", "Semarang"],
+        answer: 0,
+        explain: "Dokumen sejarah menyebut pasukan Sekutu mendarat di Tanjung Priok."
+      },
+      {
+        module: "sejarah",
+        level: "Dasar",
+        q: "Maklumat pemerintah tentang pembentukan partai politik dikeluarkan pada...",
+        options: ["3 November 1945", "12 November 1945", "12 September 1945", "13 November 1945"],
+        answer: 0,
+        explain: "Maklumat 3 November 1945 membuka jalan pembentukan partai politik."
+      },
+      {
+        module: "sejarah",
+        level: "Menengah",
+        q: "Kabinet parlementer pertama pada awal kemerdekaan dipimpin oleh...",
+        options: ["Sutan Sjahrir", "Mohammad Hatta", "Amir Sjarifuddin", "Ali Sastroamidjojo"],
+        answer: 0,
+        explain: "Kabinet parlementer pertama dipimpin oleh Perdana Menteri Sutan Sjahrir."
+      },
+      {
+        module: "sejarah",
+        level: "Dasar",
+        q: "Pasukan Sekutu di Indonesia dalam komando AFNEI dipimpin oleh...",
+        options: ["Letjen Sir Philip Christison", "Lord Louis Mountbatten", "Mayjen Mansergh", "Mayor A.G. Greenhalgh"],
+        answer: 0,
+        explain: "AFNEI di Indonesia dipimpin oleh Letjen Sir Philip Christison."
+      },
+      {
+        module: "sejarah",
+        level: "Dasar",
+        q: "Pada 5 Oktober 1945 pemerintah RI mendirikan organisasi tentara nasional pertama bernama...",
+        options: ["Tentara Keamanan Rakyat", "Tentara Nasional Indonesia", "Tentara Republik Indonesia", "Angkatan Bersenjata Republik Indonesia"],
+        answer: 0,
+        explain: "Organisasi tentara nasional pertama yang dibentuk adalah Tentara Keamanan Rakyat atau TKR."
+      },
+      {
+        module: "sejarah",
+        level: "Menengah",
+        q: "RIS tidak bertahan lama karena...",
+        options: ["Sebagian besar rakyat menghendaki negara kesatuan Indonesia", "RIS tidak memiliki sistem kepartaian", "RIS langsung dibubarkan Belanda", "Kabinet RIS tidak pernah terbentuk"],
+        answer: 0,
+        explain: "Dukungan rakyat lebih kuat kepada bentuk negara kesatuan dibanding bentuk federal RIS."
       }
     ];
 

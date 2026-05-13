@@ -310,6 +310,21 @@
       letter-spacing: 0;
     }
 
+    .question-story {
+      margin: 0 0 16px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(49, 95, 143, .08);
+      color: #273542;
+      line-height: 1.55;
+      font-size: .95rem;
+    }
+
+    .question-story strong {
+      color: #1f4366;
+    }
+
     .options {
       display: grid;
       gap: 10px;
@@ -568,6 +583,7 @@
       <div class="layout">
         <section class="quiz-card" aria-live="polite">
           <div class="question-meta" id="questionMeta"></div>
+          <p class="question-story" id="questionStory"></p>
           <h3 class="question-text" id="questionText"></h3>
           <div class="options" id="options"></div>
           <div class="feedback" id="feedback"></div>
@@ -1477,6 +1493,7 @@
       activeSummary: document.querySelector("#activeSummary"),
       lessonList: document.querySelector("#lessonList"),
       questionMeta: document.querySelector("#questionMeta"),
+      questionStory: document.querySelector("#questionStory"),
       questionText: document.querySelector("#questionText"),
       options: document.querySelector("#options"),
       feedback: document.querySelector("#feedback"),
@@ -1525,6 +1542,92 @@
       return `${question.module}:${question.q}`;
     }
 
+    function buildQuestionStory(question) {
+      const q = question.q.toLowerCase();
+
+      if (question.module === "pbo" || question.module === "lanjut" || question.module === "kasus") {
+        if (q.includes("class") && q.includes("object")) {
+          return "Di kelas pemrograman, guru meminta tim membuat aplikasi data siswa. Mereka harus membedakan mana blueprint sistem dan mana hasil nyata yang dipakai pengguna.";
+        }
+        if (q.includes("constructor")) {
+          return "Sebuah aplikasi sekolah error karena object siswa dibuat tanpa data awal. Tim diminta menentukan mekanisme yang memastikan object langsung siap pakai sejak dibuat.";
+        }
+        if (q.includes("encapsulation") || q.includes("private") || q.includes("setter")) {
+          return "Nilai siswa sempat berubah sembarangan karena akses data terlalu terbuka. Sekolah ingin data sensitif hanya bisa diubah lewat aturan resmi.";
+        }
+        if (q.includes("inheritance")) {
+          return "Tim membangun sistem sekolah dan menemukan banyak atribut yang sama antara Siswa dan Guru. Mereka ingin menghindari pengulangan kode.";
+        }
+        if (q.includes("polymorphism") || q.includes("absen")) {
+          return "Di sistem absensi, perintah yang sama dipakai untuk banyak jenis pengguna, tetapi hasil aksinya perlu berbeda sesuai peran pengguna.";
+        }
+        if (q.includes("abstraction") || q.includes("interface")) {
+          return "Aplikasi harus mendukung banyak perangkat berbeda. Pengguna cukup tahu fungsinya jalan, tanpa perlu melihat detail teknis tiap implementasi.";
+        }
+        return "Sebuah tim RPL sedang merancang aplikasi sekolah yang rapi, aman, dan mudah dikembangkan. Pilih konsep OOP yang paling tepat untuk situasi pada soal.";
+      }
+
+      if (question.module === "php") {
+        if (q.includes("get") || q.includes("post") || q.includes("form")) {
+          return "Developer membuat form login dan pencarian data. Ia harus memilih metode kirim data yang tepat sesuai kebutuhan keamanan dan tampilan URL.";
+        }
+        if (q.includes("mysql") || q.includes("koneksi") || q.includes("mysqli")) {
+          return "Sebuah website sekolah akan mengambil data dari database. Sistem hanya bisa jalan jika koneksi PHP ke MySQL benar dan dipakai konsisten.";
+        }
+        if (q.includes("crud") || q.includes("insert") || q.includes("select") || q.includes("where")) {
+          return "Admin sedang mengelola data siswa di dashboard. Ia perlu menambah, membaca, mengubah, atau menghapus data tanpa merusak baris lain.";
+        }
+        if (q.includes("echo") || q.includes("variabel") || q.includes("tag")) {
+          return "Seorang siswa baru belajar membuat file PHP pertama. Ia diminta memahami penulisan dasar kode agar output bisa tampil di browser.";
+        }
+        return "Tim web sekolah membuat website dinamis berbasis PHP. Tentukan jawaban yang paling sesuai dengan alur kerja server side dan pengolahan data.";
+      }
+
+      if (question.module === "english") {
+        if (q.includes("most expensive") || q.includes("price") || q.includes("costs")) {
+          return "Di kantin sekolah, kamu membandingkan daftar harga menu untuk memilih makanan. Gunakan informasi angka pada kalimat soal untuk menentukan jawaban.";
+        }
+        if (q.includes("yesterday") || q.includes("was")) {
+          return "Kamu menulis laporan kegiatan kemarin dalam bahasa Inggris. Kalimat harus memakai bentuk lampau yang benar, termasuk passive voice jika diperlukan.";
+        }
+        if (q.includes("than") || q.includes("more") || q.includes("better")) {
+          return "Dua teman membandingkan dua barang atau performa. Tugasmu memilih bentuk perbandingan bahasa Inggris yang tepat untuk konteks kalimat.";
+        }
+        if (q.includes("story") || q.includes("main concern") || q.includes("arif") || q.includes("poster")) {
+          return "Soal ini memakai konteks bacaan singkat. Fokus pada ide utama dan informasi paling jelas yang langsung mendukung jawaban.";
+        }
+        return "Kamu sedang mengerjakan latihan grammar dan reading. Pilih struktur bahasa Inggris yang paling tepat sesuai situasi pada soal.";
+      }
+
+      if (question.module === "pancasila") {
+        if (q.includes("harmoni") || q.includes("keberagaman") || q.includes("konflik")) {
+          return "Di lingkungan masyarakat yang beragam, warga ingin menjaga hubungan tetap rukun. Pilih tindakan atau kondisi yang paling mendukung harmoni sosial.";
+        }
+        if (q.includes("mediasi")) {
+          return "Dua kelompok warga berselisih dan mengundang pihak netral untuk membantu dialog. Tujuannya mencari solusi tanpa paksaan sepihak.";
+        }
+        if (q.includes("presidensial") || q.includes("dpr") || q.includes("negara")) {
+          return "Dalam diskusi PKn, kelas membahas struktur ketatanegaraan Indonesia. Jawaban ditentukan dari konsep dasar bentuk negara dan sistem pemerintahan.";
+        }
+        return "Sebuah forum warga sedang membahas toleransi, hak, dan tanggung jawab dalam negara demokratis. Tentukan pilihan yang paling sesuai nilai Pancasila.";
+      }
+
+      if (question.module === "sejarah") {
+        if (q.includes("surabaya") || q.includes("ultimatum") || q.includes("sekutu")) {
+          return "Kamu meninjau kronologi awal kemerdekaan ketika kedatangan Sekutu memicu ketegangan. Pilih fakta sejarah yang paling sesuai dengan peristiwa tersebut.";
+        }
+        if (q.includes("ambarawa") || q.includes("bandung") || q.includes("margarana") || q.includes("medan")) {
+          return "Soal ini terkait strategi dan tujuan dalam pertempuran mempertahankan kemerdekaan. Perhatikan nama peristiwa dan makna tindakannya.";
+        }
+        if (q.includes("maklumat") || q.includes("tkr") || q.includes("ris") || q.includes("afnei")) {
+          return "Kelas sejarah membahas pembentukan lembaga negara dan dinamika politik militer setelah 1945. Jawab berdasarkan hubungan tokoh, tanggal, dan kebijakan.";
+        }
+        return "Kamu diminta membaca ringkasan masa awal kemerdekaan Indonesia lalu menentukan fakta yang paling tepat dari opsi jawaban.";
+      }
+
+      return "Baca konteks singkatnya, lalu pilih opsi yang paling masuk akal berdasarkan informasi yang diberikan di soal.";
+    }
+
     function renderModules() {
       els.moduleList.innerHTML = Object.entries(modules).map(([key, module]) => {
         const count = key === "all" ? questions.length : questions.filter((question) => question.module === key).length;
@@ -1555,6 +1658,7 @@
         <span class="tag">${moduleLabel}</span>
         <span class="tag">${question.level}</span>
       `;
+      els.questionStory.innerHTML = `<strong>Cerita Soal:</strong> ${buildQuestionStory(question)}`;
       els.questionText.textContent = question.q;
       els.options.innerHTML = question.options.map((option, index) => {
         let status = "";

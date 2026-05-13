@@ -1,0 +1,1355 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Latihan RPL - PBO dan PHP</title>
+  <style>
+    :root {
+      --bg: #f5f3ed;
+      --surface: #fffdf7;
+      --surface-2: #ece7dc;
+      --ink: #1e2328;
+      --muted: #667078;
+      --line: #d8d0c2;
+      --green: #2f6f5e;
+      --green-dark: #214d42;
+      --blue: #315f8f;
+      --amber: #b66b1f;
+      --red: #b8463c;
+      --shadow: 0 18px 48px rgba(40, 35, 28, .13);
+      color-scheme: light;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(47, 111, 94, .16), transparent 27rem),
+        linear-gradient(135deg, rgba(49, 95, 143, .08), transparent 28rem),
+        var(--bg);
+      color: var(--ink);
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(250px, 320px) minmax(0, 1fr);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 28px;
+      background: rgba(255, 253, 247, .86);
+      border-right: 1px solid var(--line);
+      backdrop-filter: blur(16px);
+      overflow: auto;
+    }
+
+    .brand {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--ink);
+      color: var(--surface);
+      box-shadow: var(--shadow);
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 1.12rem;
+      line-height: 1.15;
+    }
+
+    .brand p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .panel-title {
+      margin: 24px 0 10px;
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .module-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .module-button {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 13px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--ink);
+      text-align: left;
+      transition: .18s ease;
+    }
+
+    .module-button:hover,
+    .module-button.active {
+      background: var(--surface);
+      border-color: var(--line);
+    }
+
+    .module-button.active {
+      box-shadow: 0 10px 24px rgba(47, 111, 94, .11);
+    }
+
+    .module-name {
+      font-weight: 750;
+    }
+
+    .module-count {
+      flex: 0 0 auto;
+      color: var(--green-dark);
+      font-size: .82rem;
+      font-weight: 800;
+    }
+
+    .summary {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    .summary strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: .92rem;
+    }
+
+    .summary p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .88rem;
+      line-height: 1.5;
+    }
+
+    .main {
+      padding: 34px clamp(18px, 4vw, 54px);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--green-dark);
+      font-size: .8rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .topbar h2 {
+      margin: 0;
+      max-width: 780px;
+      font-size: clamp(2rem, 4vw, 4.4rem);
+      line-height: .98;
+      letter-spacing: 0;
+    }
+
+    .topbar p {
+      max-width: 650px;
+      margin: 14px 0 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .score-box {
+      min-width: 170px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 253, 247, .82);
+      text-align: right;
+    }
+
+    .score-box .number {
+      display: block;
+      font-size: 2.2rem;
+      font-weight: 850;
+      line-height: 1;
+    }
+
+    .score-box .label {
+      color: var(--muted);
+      font-size: .86rem;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .chip {
+      min-height: 42px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--ink);
+      font-weight: 750;
+    }
+
+    .chip.active {
+      background: var(--ink);
+      color: var(--surface);
+      border-color: var(--ink);
+    }
+
+    .ghost-button,
+    .primary-button {
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 8px;
+      font-weight: 800;
+    }
+
+    .primary-button {
+      background: var(--green);
+      color: white;
+    }
+
+    .ghost-button {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .quiz-card,
+    .lesson-card,
+    .review-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 253, 247, .9);
+      box-shadow: var(--shadow);
+    }
+
+    .quiz-card {
+      min-height: 500px;
+      padding: clamp(18px, 3vw, 34px);
+    }
+
+    .question-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--green-dark);
+      font-size: .8rem;
+      font-weight: 800;
+    }
+
+    .question-text {
+      margin: 0 0 22px;
+      font-size: clamp(1.35rem, 2.6vw, 2rem);
+      line-height: 1.22;
+      letter-spacing: 0;
+    }
+
+    .options {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      color: var(--ink);
+      text-align: left;
+      line-height: 1.45;
+      transition: .16s ease;
+    }
+
+    .option:hover {
+      border-color: var(--green);
+      transform: translateY(-1px);
+    }
+
+    .option-letter {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--surface-2);
+      font-weight: 850;
+    }
+
+    .option.correct {
+      border-color: rgba(47, 111, 94, .55);
+      background: rgba(47, 111, 94, .12);
+    }
+
+    .option.wrong {
+      border-color: rgba(184, 70, 60, .5);
+      background: rgba(184, 70, 60, .1);
+    }
+
+    .feedback {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      line-height: 1.55;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .quiz-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-top: 22px;
+    }
+
+    .progress {
+      color: var(--muted);
+      font-weight: 750;
+    }
+
+    .lesson-card {
+      padding: 18px;
+    }
+
+    .lesson-card h3,
+    .review-card h3 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+    }
+
+    .concept-map {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .concept-node {
+      min-height: 76px;
+      padding: 10px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(47, 111, 94, .16), rgba(49, 95, 143, .12));
+      border: 1px solid rgba(47, 111, 94, .18);
+    }
+
+    .concept-node span {
+      display: block;
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .concept-node strong {
+      display: block;
+      margin-top: 5px;
+      line-height: 1.2;
+    }
+
+    .lesson-list {
+      display: grid;
+      gap: 9px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .lesson-list li {
+      padding: 11px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.48;
+    }
+
+    .lesson-list strong {
+      color: var(--ink);
+    }
+
+    .review-card {
+      display: none;
+      margin-top: 18px;
+      padding: 18px;
+    }
+
+    .review-card.show {
+      display: block;
+    }
+
+    .review-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .review-item {
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      line-height: 1.45;
+    }
+
+    .review-item strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .review-item small {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 980px) {
+      .app,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+        height: auto;
+      }
+
+      .topbar {
+        flex-direction: column;
+      }
+
+      .score-box {
+        width: 100%;
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .sidebar,
+      .main {
+        padding: 18px;
+      }
+
+      .concept-map {
+        grid-template-columns: 1fr;
+      }
+
+      .question-text {
+        font-size: 1.32rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">RPL</div>
+        <div>
+          <h1>Latihan PBO dan PHP</h1>
+          <p>Bank soal dari materi PowerPoint.</p>
+        </div>
+      </div>
+
+      <div class="summary">
+        <strong>Materi aktif</strong>
+        <p id="activeSummary">Semua materi digabung untuk latihan campuran.</p>
+      </div>
+
+      <p class="panel-title">Pilih materi</p>
+      <div class="module-list" id="moduleList"></div>
+
+      <p class="panel-title">Statistik</p>
+      <div class="summary">
+        <strong id="answeredStat">0 soal dijawab</strong>
+        <p id="accuracyStat">Akurasi akan muncul setelah kamu mulai menjawab.</p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section class="topbar">
+        <div>
+          <p class="eyebrow">XI RPL 2</p>
+          <h2>Latihan soal yang tidak sekadar menebak.</h2>
+          <p>Ambil materi dari PBO dasar, PBO lanjutan, studi kasus Java, dan PHP. Jawab, cek pembahasan, lalu lanjut sampai konsepnya benar-benar masuk.</p>
+        </div>
+        <div class="score-box" aria-live="polite">
+          <span class="number" id="scoreValue">0</span>
+          <span class="label">skor saat ini</span>
+        </div>
+      </section>
+
+      <div class="toolbar">
+        <button class="chip active" data-mode="practice" type="button">Latihan</button>
+        <button class="chip" data-mode="exam" type="button">Ujian mini</button>
+        <button class="ghost-button" id="shuffleBtn" type="button">Acak soal</button>
+        <button class="ghost-button" id="resetBtn" type="button">Ulangi</button>
+      </div>
+
+      <div class="layout">
+        <section class="quiz-card" aria-live="polite">
+          <div class="question-meta" id="questionMeta"></div>
+          <h3 class="question-text" id="questionText"></h3>
+          <div class="options" id="options"></div>
+          <div class="feedback" id="feedback"></div>
+          <div class="quiz-actions">
+            <span class="progress" id="progressText"></span>
+            <div>
+              <button class="ghost-button" id="prevBtn" type="button">Sebelumnya</button>
+              <button class="primary-button" id="nextBtn" type="button">Berikutnya</button>
+            </div>
+          </div>
+        </section>
+
+        <aside>
+          <section class="lesson-card">
+            <h3>Ringkasan cepat</h3>
+            <div class="concept-map" aria-hidden="true">
+              <div class="concept-node">
+                <span>Object</span>
+                <strong>data + perilaku</strong>
+              </div>
+              <div class="concept-node">
+                <span>PHP</span>
+                <strong>server side</strong>
+              </div>
+              <div class="concept-node">
+                <span>CRUD</span>
+                <strong>kelola data</strong>
+              </div>
+              <div class="concept-node">
+                <span>Database</span>
+                <strong>MySQL</strong>
+              </div>
+            </div>
+            <ul class="lesson-list" id="lessonList"></ul>
+          </section>
+
+          <section class="review-card" id="reviewCard">
+            <h3>Review jawaban</h3>
+            <div class="review-list" id="reviewList"></div>
+          </section>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const modules = {
+      all: {
+        label: "Semua materi",
+        summary: "Campuran PBO dasar, PBO lanjutan, studi kasus Java, dan PHP.",
+        lessons: [
+          ["PBO", "Program dibuat dengan meniru objek dunia nyata."],
+          ["Class", "Cetakan yang mendeskripsikan atribut dan method."],
+          ["Object", "Hasil nyata dari class, memiliki data sendiri."],
+          ["PHP", "Bahasa server side untuk website dinamis."],
+          ["CRUD", "Create, Read, Update, Delete untuk pengolahan data."]
+        ]
+      },
+      pbo: {
+        label: "Konsep PBO",
+        summary: "Dasar class, object, atribut, method, constructor, dan prinsip utama PBO.",
+        lessons: [
+          ["Prosedural", "Fokus pada langkah, data dan proses terpisah."],
+          ["PBO", "Fokus pada object, data dan proses menyatu."],
+          ["Constructor", "Dijalankan saat object dibuat agar siap digunakan."],
+          ["Encapsulation", "Data dibatasi dan diubah lewat cara resmi."],
+          ["Polymorphism", "Perintah sama dapat menghasilkan perilaku berbeda."]
+        ]
+      },
+      lanjut: {
+        label: "PBO Lanjutan",
+        summary: "Object bekerja sama membentuk aplikasi yang rapi dan mudah dikembangkan.",
+        lessons: [
+          ["Aplikasi", "Kumpulan object yang saling bekerja sama."],
+          ["Interaksi", "Object memakai object lain sesuai kebutuhan tugas."],
+          ["Tanggung jawab", "Satu class sebaiknya punya satu tugas utama."],
+          ["Validasi", "Object menjaga datanya sendiri agar tidak sembarangan."],
+          ["Reuse", "Class dibuat sekali dan dapat dipakai berkali-kali."]
+        ]
+      },
+      kasus: {
+        label: "Studi Kasus PBO",
+        summary: "Contoh Java untuk class-object, constructor, encapsulation, inheritance, polymorphism, abstraction, dan interface.",
+        lessons: [
+          ["Siswa", "Class Siswa punya nama, NIS, jurusan, dan tampilData()."],
+          ["Getter-setter", "Akses nilai private dilakukan melalui method resmi."],
+          ["Inheritance", "Siswa dan Guru dapat menjadi turunan Orang."],
+          ["Abstract class", "Menentukan fungsi penting tanpa detail implementasi."],
+          ["Interface", "Kontrak perilaku, misalnya Printer wajib punya print()."]
+        ]
+      },
+      php: {
+        label: "PHP",
+        summary: "Pengenalan PHP, cara kerja server side, variabel, form, GET/POST, database, dan CRUD.",
+        lessons: [
+          ["PHP", "Hypertext Preprocessor, berjalan di server."],
+          ["echo", "Perintah untuk menampilkan tulisan."],
+          ["GET", "Data terlihat di URL, cocok untuk pencarian."],
+          ["POST", "Data tidak terlihat di URL, cocok untuk login."],
+          ["mysqli_query", "Menjalankan perintah SQL dari PHP ke MySQL."]
+        ]
+      }
+    };
+
+    const questions = [
+      {
+        module: "pbo",
+        level: "Dasar",
+        q: "Apa inti dari Pemrograman Berorientasi Objek menurut materi?",
+        options: ["Menyusun program sebagai kumpulan object", "Menulis semua kode dalam satu fungsi", "Memisahkan semua data dari proses", "Menghindari penggunaan class"],
+        answer: 0,
+        explain: "PBO meniru cara manusia melihat dunia nyata: program dipikirkan sebagai object yang memiliki data dan perilaku."
+      },
+      {
+        module: "pbo",
+        level: "Dasar",
+        q: "Dalam Java, class paling tepat dipahami sebagai apa?",
+        options: ["Cetakan atau konsep untuk membuat object", "Data nyata yang sudah digunakan program", "Perintah untuk mencetak teks", "Database tempat menyimpan nilai"],
+        answer: 0,
+        explain: "Class mendeskripsikan data dan perilaku. Object adalah hasil nyata dari class."
+      },
+      {
+        module: "pbo",
+        level: "Dasar",
+        q: "Jika class adalah desain rumah, maka object adalah...",
+        options: ["Rumah nyata yang dibangun dari desain", "Tukang yang membangun rumah", "Alamat rumah di database", "Daftar belanja bahan bangunan"],
+        answer: 0,
+        explain: "Slide menjelaskan class sebagai desain atau cetakan, sedangkan object adalah hasil nyatanya."
+      },
+      {
+        module: "pbo",
+        level: "Dasar",
+        q: "Apa perbedaan utama procedural dan PBO?",
+        options: ["Procedural fokus pada langkah, PBO fokus pada object", "Procedural selalu memakai database, PBO tidak", "PBO tidak boleh memiliki method", "Procedural hanya dipakai di Java"],
+        answer: 0,
+        explain: "Procedural menekankan langkah-langkah. PBO menekankan object yang menyatukan data dan proses."
+      },
+      {
+        module: "pbo",
+        level: "Dasar",
+        q: "Dalam PBO, atribut digunakan untuk...",
+        options: ["Menyimpan data object", "Menjalankan server Apache", "Menghapus database", "Mengulang kode lima kali"],
+        answer: 0,
+        explain: "Atribut menjelaskan kondisi atau data yang dimiliki object."
+      },
+      {
+        module: "pbo",
+        level: "Dasar",
+        q: "Dalam PBO, method digunakan untuk...",
+        options: ["Menyatakan perilaku atau aksi object", "Membuat password MySQL", "Menentukan alamat localhost", "Mengubah file PPT menjadi gambar"],
+        answer: 0,
+        explain: "Method adalah perilaku yang bisa dilakukan object."
+      },
+      {
+        module: "pbo",
+        level: "Menengah",
+        q: "Mengapa constructor disebut mekanisme kelahiran object?",
+        options: ["Karena dijalankan saat object dibuat agar object siap dipakai", "Karena menghapus object dari memori", "Karena hanya dipakai untuk menampilkan teks", "Karena mengganti nama class"],
+        answer: 0,
+        explain: "Constructor memastikan object tidak kosong, tidak setengah jadi, dan siap digunakan."
+      },
+      {
+        module: "pbo",
+        level: "Menengah",
+        q: "Encapsulation bertujuan untuk...",
+        options: ["Menyembunyikan data agar tidak diubah sembarangan", "Membuat semua data bebas diakses semua class", "Menghapus method dari object", "Membuat class tanpa atribut"],
+        answer: 0,
+        explain: "Encapsulation membatasi akses data dan menyediakan cara resmi untuk mengubahnya."
+      },
+      {
+        module: "pbo",
+        level: "Menengah",
+        q: "Access modifier dalam Java dipakai untuk menentukan...",
+        options: ["Bagian mana yang boleh dilihat atau diubah dari luar", "Jumlah slide dalam presentasi", "Nama database yang dipakai", "Urutan tampilan HTML"],
+        answer: 0,
+        explain: "Access modifier mengontrol interaksi antar class agar data tidak dibuka sembarangan."
+      },
+      {
+        module: "pbo",
+        level: "Menengah",
+        q: "Inheritance berarti...",
+        options: ["Pewarisan sifat antar class", "Pengulangan for dalam PHP", "Penyimpanan data dalam array", "Pengiriman form dengan POST"],
+        answer: 0,
+        explain: "Inheritance membuat sifat umum cukup ditulis sekali lalu diwariskan ke class turunan."
+      },
+      {
+        module: "pbo",
+        level: "Menengah",
+        q: "Polymorphism berarti...",
+        options: ["Satu perintah dapat menghasilkan perilaku berbeda tergantung object", "Satu class tidak boleh punya method", "Semua object harus memiliki data yang sama", "Kode PHP berjalan di browser"],
+        answer: 0,
+        explain: "Dalam polymorphism, perintah yang sama bisa direspons berbeda oleh object berbeda."
+      },
+      {
+        module: "pbo",
+        level: "Menengah",
+        q: "Abstraction membantu programmer untuk...",
+        options: ["Fokus pada fungsi tanpa tenggelam dalam detail teknis", "Membuka semua isi database", "Menulis ulang class yang sama", "Menghilangkan constructor"],
+        answer: 0,
+        explain: "Abstraction menyederhanakan sistem kompleks dengan menampilkan hal yang penting."
+      },
+      {
+        module: "lanjut",
+        level: "Dasar",
+        q: "Menurut materi PBO lanjutan, aplikasi sebenarnya adalah...",
+        options: ["Kumpulan object yang saling bekerja sama", "Satu file yang berisi semua logika", "Sekumpulan gambar tanpa proses", "Database tanpa class"],
+        answer: 0,
+        explain: "Aplikasi nyata terdiri dari object yang punya tugas masing-masing dan saling berinteraksi."
+      },
+      {
+        module: "lanjut",
+        level: "Dasar",
+        q: "Contoh pembagian tugas yang tepat pada sistem sekolah adalah...",
+        options: ["Object Siswa menyimpan data siswa, Object Kelas mengelola daftar siswa", "Object Siswa mengatur server Apache", "Object Guru menyimpan password MySQL", "Object Kelas menghapus semua method"],
+        answer: 0,
+        explain: "Materi memberi contoh Siswa, Kelas, dan Guru dengan peran masing-masing."
+      },
+      {
+        module: "lanjut",
+        level: "Menengah",
+        q: "Interaksi antar object berarti...",
+        options: ["Satu object menggunakan object lain untuk menyelesaikan tugas", "Object tidak boleh saling berhubungan", "Semua object harus punya nama sama", "Class hanya boleh dibuat satu kali"],
+        answer: 0,
+        explain: "Contohnya Transaksi membutuhkan Produk, atau Kelas membutuhkan Siswa."
+      },
+      {
+        module: "lanjut",
+        level: "Menengah",
+        q: "Prinsip satu class satu tanggung jawab berarti...",
+        options: ["Satu class sebaiknya hanya punya satu tugas utama", "Satu class harus mengerjakan semua proses aplikasi", "Satu class dilarang memiliki atribut", "Satu object harus dibuat tanpa data"],
+        answer: 0,
+        explain: "Jika satu class menangani terlalu banyak hal, kode sulit dipahami dan diperbaiki."
+      },
+      {
+        module: "lanjut",
+        level: "Menengah",
+        q: "Mengapa data pada aplikasi nyata bisa berupa object?",
+        options: ["Karena daftar siswa dapat berupa kumpulan object Siswa", "Karena angka tidak bisa disimpan", "Karena object hanya dipakai untuk tampilan", "Karena PHP tidak mengenal variabel"],
+        answer: 0,
+        explain: "Materi menyebut daftar siswa atau produk sebagai kumpulan object."
+      },
+      {
+        module: "lanjut",
+        level: "Dasar",
+        q: "Urutan umum alur kerja aplikasi berbasis object adalah...",
+        options: ["Object dibuat, data diisi, object digunakan, hasil ditampilkan", "Hasil ditampilkan, object dihapus, data hilang", "Database dibuat, HTML dihapus, server berhenti", "Class diwariskan, lalu langsung selesai"],
+        answer: 0,
+        explain: "Slide alur kerja menyebut object dibuat, data diisi, object digunakan, lalu hasil ditampilkan."
+      },
+      {
+        module: "lanjut",
+        level: "Menengah",
+        q: "Contoh validasi data oleh object adalah...",
+        options: ["Nilai tidak boleh di bawah 0 dan saldo tidak boleh negatif", "Nama file harus selalu index.php", "GET harus selalu dipakai untuk login", "Class Produk hanya boleh dipakai di kasir"],
+        answer: 0,
+        explain: "Object bertanggung jawab menjaga datanya sendiri agar aman dan sesuai aturan."
+      },
+      {
+        module: "lanjut",
+        level: "Dasar",
+        q: "Penggunaan class secara berulang berarti...",
+        options: ["Class dibuat sekali, lalu bisa dipakai di banyak bagian aplikasi", "Class harus ditulis ulang setiap dipakai", "Class tidak bisa dipakai di laporan", "Class hanya boleh punya satu object selamanya"],
+        answer: 0,
+        explain: "Contohnya class Produk bisa dipakai di kasir, laporan, dan stok."
+      },
+      {
+        module: "kasus",
+        level: "Dasar",
+        q: "Pada studi kasus siswa, class Siswa memiliki data...",
+        options: ["nama, NIS, dan jurusan", "localhost, root, dan password", "GET, POST, dan CRUD", "Apache, MySQL, dan XAMPP"],
+        answer: 0,
+        explain: "Slide studi kasus menyebut setiap siswa memiliki nama, NIS, dan jurusan."
+      },
+      {
+        module: "kasus",
+        level: "Dasar",
+        q: "Dalam studi kasus class dan object, Object adalah siswa nyata seperti...",
+        options: ["Felix, Faiz, atau Satya", "Apache dan MySQL", "INSERT dan UPDATE", "GET dan POST"],
+        answer: 0,
+        explain: "Class adalah konsep Siswa, object adalah siswa nyata."
+      },
+      {
+        module: "kasus",
+        level: "Menengah",
+        q: "Mengapa constructor dipakai pada data siswa baru?",
+        options: ["Agar data siswa langsung lengkap saat object dibuat", "Agar nilai siswa bebas diubah siapa saja", "Agar semua class menjadi abstract", "Agar PHP berjalan di browser"],
+        answer: 0,
+        explain: "Materi menyatakan siswa baru tidak boleh kosong, sehingga constructor membuat object siap pakai."
+      },
+      {
+        module: "kasus",
+        level: "Menengah",
+        q: "Pada contoh encapsulation, atribut nilai dibuat private lalu diakses melalui...",
+        options: ["getter dan setter", "GET dan POST", "Apache dan MySQL", "INSERT dan SELECT"],
+        answer: 0,
+        explain: "Data dibuat private, akses dilakukan lewat method resmi seperti setNilai dan getNilai."
+      },
+      {
+        module: "kasus",
+        level: "Menengah",
+        q: "Pada contoh setNilai, nilai valid adalah...",
+        options: ["0 sampai 100", "Selalu negatif", "Lebih dari 100 saja", "Hanya kosong"],
+        answer: 0,
+        explain: "Kode mengecek if (nilai >= 0 && nilai <= 100)."
+      },
+      {
+        module: "kasus",
+        level: "Dasar",
+        q: "Dalam contoh inheritance, Siswa dan Guru adalah turunan dari...",
+        options: ["Orang", "Printer", "ATM", "Database"],
+        answer: 0,
+        explain: "Slide menyebut semua warga sekolah adalah Orang; Siswa dan Guru turunan dari Orang."
+      },
+      {
+        module: "kasus",
+        level: "Menengah",
+        q: "Pada studi kasus polymorphism, method yang sama tetapi perilakunya berbeda adalah...",
+        options: ["absen()", "mysqli_connect()", "echo", "include"],
+        answer: 0,
+        explain: "Siswa menjalankan absen sebagai hadir di kelas, Guru menjalankan absen sebagai mengajar."
+      },
+      {
+        module: "kasus",
+        level: "Menengah",
+        q: "Contoh abstraction pada materi memakai perumpamaan...",
+        options: ["Mesin ATM", "Toko online", "Form login", "Daftar buah"],
+        answer: 0,
+        explain: "Semua ATM bisa tarik tunai, tetapi cara kerjanya berbeda tiap bank."
+      },
+      {
+        module: "kasus",
+        level: "Menengah",
+        q: "Interface pada contoh Printer berarti...",
+        options: ["Kontrak perilaku bahwa class printer harus punya print()", "Class induk yang menyimpan nama", "Database untuk menyimpan data printer", "Perintah untuk menampilkan tulisan di PHP"],
+        answer: 0,
+        explain: "Interface adalah kontrak perilaku. PrinterCanon dan PrinterEpson mengimplementasikan print()."
+      },
+      {
+        module: "php",
+        level: "Dasar",
+        q: "PHP digunakan untuk membuat website menjadi...",
+        options: ["Interaktif dan dinamis", "Hanya berisi gambar statis", "Tidak bisa menyimpan data", "Selalu berjalan tanpa server"],
+        answer: 0,
+        explain: "PHP memungkinkan website melakukan login, menyimpan data, menghitung, dan mengelola database."
+      },
+      {
+        module: "php",
+        level: "Dasar",
+        q: "Kepanjangan PHP saat ini adalah...",
+        options: ["Hypertext Preprocessor", "Personal Home Page", "Private Hosting Program", "Page Hyperlink Protocol"],
+        answer: 0,
+        explain: "Dulu PHP berarti Personal Home Page, sekarang Hypertext Preprocessor."
+      },
+      {
+        module: "php",
+        level: "Dasar",
+        q: "PHP dibuat oleh Rasmus Lerdorf pada tahun...",
+        options: ["1994", "2004", "1984", "2014"],
+        answer: 0,
+        explain: "Slide penemu PHP menyebut Rasmus Lerdorf pada tahun 1994."
+      },
+      {
+        module: "php",
+        level: "Dasar",
+        q: "Mengapa PHP disebut server side?",
+        options: ["Karena PHP berjalan di server", "Karena PHP berjalan hanya di keyboard", "Karena PHP selalu berjalan di URL", "Karena PHP tidak butuh Apache"],
+        answer: 0,
+        explain: "Berbeda dengan JavaScript yang berjalan di browser, PHP diproses di server."
+      },
+      {
+        module: "php",
+        level: "Dasar",
+        q: "Dalam perumpamaan restoran, PHP diibaratkan sebagai...",
+        options: ["Koki", "Pelanggan", "Gudang bahan", "Menu makanan"],
+        answer: 0,
+        explain: "Browser/User adalah pelanggan, server adalah dapur, PHP adalah koki, database adalah gudang bahan."
+      },
+      {
+        module: "php",
+        level: "Dasar",
+        q: "Software server untuk menjalankan website PHP adalah...",
+        options: ["Apache", "Array", "Boolean", "Interface"],
+        answer: 0,
+        explain: "Apache HTTP Server menjalankan website. Tanpa Apache, PHP tidak bisa dijalankan di browser."
+      },
+      {
+        module: "php",
+        level: "Dasar",
+        q: "MySQL berfungsi sebagai...",
+        options: ["Tempat menyimpan data", "Perintah menampilkan tulisan", "Tag pembuka PHP", "Operator penjumlahan"],
+        answer: 0,
+        explain: "MySQL menyimpan data seperti data siswa, password, nilai, dan barang."
+      },
+      {
+        module: "php",
+        level: "Dasar",
+        q: "Semua kode PHP dasar ditulis di antara tag...",
+        options: ["<?php dan ?>", "<html> dan </html>", "<form> dan </form>", "<button> dan </button>"],
+        answer: 0,
+        explain: "Struktur dasar PHP menggunakan tag pembuka <?php dan penutup ?>."
+      },
+      {
+        module: "php",
+        level: "Dasar",
+        q: "Perintah echo dalam PHP dipakai untuk...",
+        options: ["Menampilkan tulisan", "Membuat database", "Menghapus tabel", "Menjalankan Apache"],
+        answer: 0,
+        explain: "Contohnya echo \"Halo Dunia\"; untuk menampilkan teks."
+      },
+      {
+        module: "php",
+        level: "Dasar",
+        q: "Dalam PHP, variabel diawali dengan tanda...",
+        options: ["$", "#", "@", "%"],
+        answer: 0,
+        explain: "Contohnya $nama, $umur, dan $nilai_siswa."
+      },
+      {
+        module: "php",
+        level: "Dasar",
+        q: "Penulisan variabel yang benar adalah...",
+        options: ["$nilai_siswa", "$1nama", "$nama siswa", "nama$"],
+        answer: 0,
+        explain: "Materi memperbolehkan $nama, $umur, $nilai_siswa dan tidak memperbolehkan $1nama atau $nama siswa."
+      },
+      {
+        module: "php",
+        level: "Dasar",
+        q: "Tipe data untuk nilai true/false adalah...",
+        options: ["Boolean", "String", "Integer", "Float"],
+        answer: 0,
+        explain: "Boolean bernilai true atau false."
+      },
+      {
+        module: "php",
+        level: "Dasar",
+        q: "Jika $a = 10 dan $b = 5, operator + menghasilkan...",
+        options: ["15", "5", "50", "2"],
+        answer: 0,
+        explain: "Operator + adalah tambah, jadi 10 + 5 = 15."
+      },
+      {
+        module: "php",
+        level: "Menengah",
+        q: "Method form yang cocok untuk login adalah...",
+        options: ["POST", "GET", "echo", "SELECT"],
+        answer: 0,
+        explain: "POST lebih cocok untuk login karena data tidak terlihat di URL."
+      },
+      {
+        module: "php",
+        level: "Menengah",
+        q: "Method form yang cocok untuk pencarian adalah...",
+        options: ["GET", "POST", "DELETE", "include"],
+        answer: 0,
+        explain: "GET cocok untuk pencarian karena data terlihat di URL dan bisa dibookmark."
+      },
+      {
+        module: "php",
+        level: "Menengah",
+        q: "Variabel khusus PHP untuk mengambil data method GET adalah...",
+        options: ["$_GET", "$_POST", "$data", "$koneksi"],
+        answer: 0,
+        explain: "$_GET mengambil data yang dikirim menggunakan method GET."
+      },
+      {
+        module: "php",
+        level: "Menengah",
+        q: "Variabel khusus PHP untuk mengambil data method POST adalah...",
+        options: ["$_POST", "$_GET", "$buah", "$hasil"],
+        answer: 0,
+        explain: "$_POST mengambil data yang dikirim menggunakan method POST."
+      },
+      {
+        module: "php",
+        level: "Menengah",
+        q: "CRUD adalah singkatan dari...",
+        options: ["Create, Read, Update, Delete", "Class, Run, Upload, Download", "Code, Root, User, Data", "Connect, Read, Use, Drop"],
+        answer: 0,
+        explain: "CRUD adalah dasar pengolahan data: menambah, membaca, mengubah, dan menghapus."
+      },
+      {
+        module: "php",
+        level: "Menengah",
+        q: "Fungsi untuk menghubungkan PHP dengan MySQL pada materi adalah...",
+        options: ["mysqli_connect()", "mysqli_fetch_array()", "echo()", "print()"],
+        answer: 0,
+        explain: "mysqli_connect() membuat hubungan antara PHP dan database MySQL."
+      },
+      {
+        module: "php",
+        level: "Menengah",
+        q: "Pada koneksi database XAMPP, username bawaan biasanya...",
+        options: ["root", "admin123", "siswa", "localhost"],
+        answer: 0,
+        explain: "Slide menjelaskan root sebagai username database bawaan XAMPP."
+      },
+      {
+        module: "php",
+        level: "Menengah",
+        q: "Fungsi include \"koneksi.php\" berarti...",
+        options: ["Memasukkan isi koneksi.php ke file yang sedang dijalankan", "Menghapus koneksi database", "Mengirim data lewat URL", "Menampilkan array buah"],
+        answer: 0,
+        explain: "include dipakai agar kode koneksi tidak perlu ditulis berulang di setiap file."
+      },
+      {
+        module: "php",
+        level: "Menengah",
+        q: "Perintah SQL untuk menambah data dalam CRUD adalah...",
+        options: ["INSERT INTO", "SELECT * FROM", "UPDATE", "DELETE FROM"],
+        answer: 0,
+        explain: "CREATE dalam CRUD memakai INSERT INTO untuk memasukkan data ke tabel."
+      },
+      {
+        module: "php",
+        level: "Menengah",
+        q: "Perintah SQL untuk menampilkan data adalah...",
+        options: ["SELECT * FROM", "INSERT INTO", "DELETE FROM", "SET nama"],
+        answer: 0,
+        explain: "READ dalam CRUD memakai SELECT * FROM untuk mengambil semua data dari tabel."
+      },
+      {
+        module: "php",
+        level: "Menengah",
+        q: "Mengapa WHERE penting pada UPDATE dan DELETE?",
+        options: ["Agar hanya data tertentu yang diubah atau dihapus", "Agar semua data berubah sekaligus", "Agar PHP berjalan di browser", "Agar form otomatis memakai GET"],
+        answer: 0,
+        explain: "Tanpa WHERE, UPDATE dapat mengubah semua data dan DELETE dapat menghapus seluruh data."
+      }
+    ];
+
+    function distributeAnswers() {
+      questions.forEach((question) => {
+        const hash = Array.from(question.q).reduce((total, char) => total + char.charCodeAt(0), 0);
+        const shift = hash % question.options.length;
+        if (!shift) return;
+        question.options = question.options
+          .slice(shift)
+          .concat(question.options.slice(0, shift));
+        question.answer = (question.answer - shift + question.options.length) % question.options.length;
+      });
+    }
+
+    const state = {
+      module: "all",
+      mode: "practice",
+      index: 0,
+      order: [],
+      answers: new Map()
+    };
+
+    const els = {
+      moduleList: document.querySelector("#moduleList"),
+      activeSummary: document.querySelector("#activeSummary"),
+      lessonList: document.querySelector("#lessonList"),
+      questionMeta: document.querySelector("#questionMeta"),
+      questionText: document.querySelector("#questionText"),
+      options: document.querySelector("#options"),
+      feedback: document.querySelector("#feedback"),
+      progressText: document.querySelector("#progressText"),
+      scoreValue: document.querySelector("#scoreValue"),
+      answeredStat: document.querySelector("#answeredStat"),
+      accuracyStat: document.querySelector("#accuracyStat"),
+      prevBtn: document.querySelector("#prevBtn"),
+      nextBtn: document.querySelector("#nextBtn"),
+      resetBtn: document.querySelector("#resetBtn"),
+      shuffleBtn: document.querySelector("#shuffleBtn"),
+      reviewCard: document.querySelector("#reviewCard"),
+      reviewList: document.querySelector("#reviewList")
+    };
+
+    function filteredQuestions() {
+      const base = state.module === "all"
+        ? questions
+        : questions.filter((question) => question.module === state.module);
+      return state.order.map((index) => base[index]).filter(Boolean);
+    }
+
+    function currentBase() {
+      return state.module === "all"
+        ? questions
+        : questions.filter((question) => question.module === state.module);
+    }
+
+    function makeOrder(shuffle = false) {
+      const base = currentBase();
+      state.order = base.map((_, index) => index);
+      if (shuffle) {
+        for (let i = state.order.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [state.order[i], state.order[j]] = [state.order[j], state.order[i]];
+        }
+      }
+      if (state.mode === "exam") {
+        state.order = state.order.slice(0, Math.min(15, state.order.length));
+      }
+      state.index = 0;
+      state.answers.clear();
+    }
+
+    function questionKey(question) {
+      return `${question.module}:${question.q}`;
+    }
+
+    function renderModules() {
+      els.moduleList.innerHTML = Object.entries(modules).map(([key, module]) => {
+        const count = key === "all" ? questions.length : questions.filter((question) => question.module === key).length;
+        return `
+          <button class="module-button ${state.module === key ? "active" : ""}" data-module="${key}" type="button">
+            <span class="module-name">${module.label}</span>
+            <span class="module-count">${count}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderLessons() {
+      const module = modules[state.module];
+      els.activeSummary.textContent = module.summary;
+      els.lessonList.innerHTML = module.lessons
+        .map(([title, text]) => `<li><strong>${title}:</strong> ${text}</li>`)
+        .join("");
+    }
+
+    function renderQuestion() {
+      const list = filteredQuestions();
+      const question = list[state.index];
+      const saved = state.answers.get(questionKey(question));
+      const moduleLabel = modules[question.module].label;
+
+      els.questionMeta.innerHTML = `
+        <span class="tag">${moduleLabel}</span>
+        <span class="tag">${question.level}</span>
+      `;
+      els.questionText.textContent = question.q;
+      els.options.innerHTML = question.options.map((option, index) => {
+        let status = "";
+        if (saved) {
+          if (index === question.answer) status = "correct";
+          if (index === saved.choice && !saved.correct) status = "wrong";
+        }
+        return `
+          <button class="option ${status}" data-option="${index}" type="button" ${saved ? "disabled" : ""}>
+            <span class="option-letter">${String.fromCharCode(65 + index)}</span>
+            <span>${option}</span>
+          </button>
+        `;
+      }).join("");
+
+      if (saved) {
+        showFeedback(question, saved);
+      } else {
+        els.feedback.className = "feedback";
+        els.feedback.innerHTML = "";
+      }
+
+      els.progressText.textContent = `Soal ${state.index + 1} dari ${list.length}`;
+      els.prevBtn.disabled = state.index === 0;
+      els.nextBtn.textContent = state.index === list.length - 1 ? "Selesai" : "Berikutnya";
+      renderStats();
+      renderReview();
+    }
+
+    function showFeedback(question, saved) {
+      if (state.mode === "exam" && state.answers.size < filteredQuestions().length) {
+        els.feedback.className = "feedback";
+        els.feedback.innerHTML = "";
+        return;
+      }
+
+      const title = saved.correct ? "Benar." : "Belum tepat.";
+      els.feedback.className = "feedback show";
+      els.feedback.innerHTML = `<strong>${title}</strong>${question.explain}`;
+    }
+
+    function answerQuestion(choice) {
+      const question = filteredQuestions()[state.index];
+      const correct = choice === question.answer;
+      state.answers.set(questionKey(question), { choice, correct });
+      renderQuestion();
+    }
+
+    function renderStats() {
+      const answered = Array.from(state.answers.values());
+      const correct = answered.filter((item) => item.correct).length;
+      const score = answered.length ? Math.round((correct / answered.length) * 100) : 0;
+      els.scoreValue.textContent = score;
+      els.answeredStat.textContent = `${answered.length} soal dijawab`;
+      els.accuracyStat.textContent = answered.length
+        ? `${correct} benar dari ${answered.length} jawaban.`
+        : "Akurasi akan muncul setelah kamu mulai menjawab.";
+    }
+
+    function renderReview() {
+      const list = filteredQuestions();
+      if (!state.answers.size) {
+        els.reviewCard.className = "review-card";
+        els.reviewList.innerHTML = "";
+        return;
+      }
+
+      els.reviewCard.className = "review-card show";
+      els.reviewList.innerHTML = list
+        .filter((question) => state.answers.has(questionKey(question)))
+        .map((question) => {
+          const saved = state.answers.get(questionKey(question));
+          const chosen = question.options[saved.choice];
+          const correct = question.options[question.answer];
+          return `
+            <div class="review-item">
+              <strong>${saved.correct ? "Benar" : "Salah"} - ${modules[question.module].label}</strong>
+              ${question.q}
+              <small>Jawabanmu: ${chosen}</small>
+              <small>Kunci: ${correct}</small>
+            </div>
+          `;
+        }).join("");
+    }
+
+    function renderAll() {
+      renderModules();
+      renderLessons();
+      renderQuestion();
+    }
+
+    els.moduleList.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-module]");
+      if (!button) return;
+      state.module = button.dataset.module;
+      makeOrder(false);
+      renderAll();
+    });
+
+    document.querySelector(".toolbar").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-mode]");
+      if (!button) return;
+      state.mode = button.dataset.mode;
+      document.querySelectorAll("[data-mode]").forEach((item) => {
+        item.classList.toggle("active", item === button);
+      });
+      makeOrder(false);
+      renderAll();
+    });
+
+    els.options.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-option]");
+      if (!button) return;
+      answerQuestion(Number(button.dataset.option));
+    });
+
+    els.prevBtn.addEventListener("click", () => {
+      if (state.index > 0) {
+        state.index--;
+        renderQuestion();
+      }
+    });
+
+    els.nextBtn.addEventListener("click", () => {
+      const list = filteredQuestions();
+      if (state.index < list.length - 1) {
+        state.index++;
+        renderQuestion();
+      } else if (state.mode === "exam") {
+        renderQuestion();
+        els.feedback.className = "feedback show";
+        els.feedback.innerHTML = "<strong>Ujian mini selesai.</strong>Pembahasan dan review jawaban sudah dibuka. Lumayan, tidak perlu rapat evaluasi darurat.";
+      }
+    });
+
+    els.resetBtn.addEventListener("click", () => {
+      makeOrder(false);
+      renderAll();
+    });
+
+    els.shuffleBtn.addEventListener("click", () => {
+      makeOrder(true);
+      renderAll();
+    });
+
+    distributeAnswers();
+    makeOrder(false);
+    renderAll();
+  </script>
+</body>
+</html>

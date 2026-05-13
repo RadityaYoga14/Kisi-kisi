@@ -565,7 +565,7 @@
         <div>
           <p class="eyebrow">Kelas XI</p>
           <h2>Latihan soal yang tidak sekadar menebak.</h2>
-          <p>Ambil materi dari RPL, Bahasa Inggris, Pancasila, dan Sejarah. Jawab, cek pembahasan, lalu lanjut sampai konsepnya benar-benar masuk.</p>
+          <p>Ambil materi dari RPL, Bahasa Inggris, Bahasa Indonesia, Pancasila, dan Sejarah. Jawab, cek pembahasan, lalu lanjut sampai konsepnya benar-benar masuk.</p>
         </div>
         <div class="score-box" aria-live="polite">
           <span class="number" id="scoreValue">0</span>
@@ -633,10 +633,11 @@
     const modules = {
       all: {
         label: "Semua materi",
-        summary: "Campuran RPL, Bahasa Inggris, Pancasila, dan Sejarah dari dokumen di folder ini.",
+        summary: "Campuran RPL, Bahasa Inggris, Bahasa Indonesia, Pancasila, dan Sejarah dari dokumen di folder ini.",
         lessons: [
           ["RPL", "PBO memakai object, PHP memproses website di server."],
           ["English", "Banyak soal membahas comparison, passive voice, dan reading."],
+          ["Bahasa Indonesia", "Fokus puisi, drama, dan karya ilmiah sesuai kisi-kisi UAS."],
           ["Pancasila", "Fokus pada harmoni keberagaman dan sistem pemerintahan."],
           ["Sejarah", "Fokus pada perjuangan mempertahankan kemerdekaan Indonesia."],
           ["Latihan", "Jawab soal, baca pembahasan, lalu ulang bagian yang masih lemah."]
@@ -695,6 +696,17 @@
           ["Simple present", "Subjek orang ketiga tunggal memakai verb + s/es."],
           ["Passive voice", "Pola lampau: was/were + past participle."],
           ["Reading", "Cari jawaban dari informasi eksplisit dalam teks."]
+        ]
+      },
+      bindo: {
+        label: "Bahasa Indonesia",
+        summary: "Latihan puisi, drama, dan karya ilmiah sesuai kisi-kisi UAS kelas XI semester 2.",
+        lessons: [
+          ["Puisi", "Diksi, majas, simbol, makna konotatif, amanat, dan teknik pembacaan."],
+          ["Drama", "Unsur, struktur, jenis, akting, improvisasi, properti, dan peran sutradara."],
+          ["Karya ilmiah", "Bagian penulisan, hipotesis, metode, kesimpulan, kutipan, dan anti plagiarisme."],
+          ["Bahasa ilmiah", "Gunakan bahasa baku, objektif, logis, dan berbasis data."],
+          ["Evaluasi", "Nilai kesesuaian tema, suasana, isi, dan ketepatan kaidah penulisan."]
         ]
       },
       pancasila: {
@@ -1465,6 +1477,142 @@
         options: ["Sebagian besar rakyat menghendaki negara kesatuan Indonesia", "RIS tidak memiliki sistem kepartaian", "RIS langsung dibubarkan Belanda", "Kabinet RIS tidak pernah terbentuk"],
         answer: 0,
         explain: "Dukungan rakyat lebih kuat kepada bentuk negara kesatuan dibanding bentuk federal RIS."
+      },
+      {
+        module: "bindo",
+        level: "Menengah",
+        q: "Cerpen singkat: Rina pulang malam setelah merawat ibunya. Hujan turun deras, tetapi ia tetap tersenyum karena ibunya mulai membaik. Larik puisi yang paling tepat untuk alih wahana cerpen tersebut adalah...",
+        options: ["Di bawah hujan, senyum Rina menyalakan harap di malam panjang", "Rina naik bus lalu membeli roti", "Ibunya sakit, lalu Rina tidur", "Hujan adalah air dari langit saja"],
+        answer: 0,
+        explain: "Alih wahana cerpen ke puisi menekankan emosi, citraan, dan kepadatan makna."
+      },
+      {
+        module: "bindo",
+        level: "Dasar",
+        q: "Larik \"Kota itu tak pernah tidur, menelan lelah para pejalan\" menggunakan majas...",
+        options: ["Personifikasi", "Metonimia", "Paradoks", "Hiperbola"],
+        answer: 0,
+        explain: "Kota diberi sifat manusia (tidur, menelan), jadi termasuk personifikasi."
+      },
+      {
+        module: "bindo",
+        level: "Menengah",
+        q: "Pada larik \"Jalan berbatu kupeluk sampai fajar\", makna konotatif \"jalan berbatu\" adalah...",
+        options: ["Hambatan hidup atau perjuangan berat", "Jalan desa yang belum diaspal", "Perjalanan wisata pegunungan", "Cuaca malam yang dingin"],
+        answer: 0,
+        explain: "Dalam puisi, \"jalan berbatu\" lazim dipakai sebagai simbol tantangan hidup."
+      },
+      {
+        module: "bindo",
+        level: "Dasar",
+        q: "Tema puisi adalah kehilangan. Diksi yang paling sesuai ialah...",
+        options: ["Lengang, jejak, rindu, hening", "Diskon, aplikasi, kuota, server", "Pesta, tawa, confetti, sorak", "Mesin, kabel, terminal, kode"],
+        answer: 0,
+        explain: "Tema kehilangan membutuhkan pilihan kata yang membangun suasana sepi dan pilu."
+      },
+      {
+        module: "bindo",
+        level: "Dasar",
+        q: "Puisi bertema duka paling tepat dibaca dengan teknik...",
+        options: ["Tempo sedang-lambat, intonasi menurun, ekspresi sendu", "Tempo cepat, ekspresi datar", "Volume sangat keras sepanjang bait", "Tempo acak agar dinamis"],
+        answer: 0,
+        explain: "Teknik pembacaan harus selaras dengan suasana puisi agar amanat tersampaikan."
+      },
+      {
+        module: "bindo",
+        level: "Menengah",
+        q: "Manakah kalimat yang paling tepat secara kaidah untuk larik puisi?",
+        options: ["Aku tak tahu ke mana langkah ini pergi.", "aku tak tau kemana langkah ini pergi", "Aku tak tau kemana langkah ini pergi,,", "aku tak tahu kemana langkah ini pergi"],
+        answer: 0,
+        explain: "Pilihan pertama tepat dalam ejaan, kapitalisasi, dan tanda baca."
+      },
+      {
+        module: "bindo",
+        level: "Dasar",
+        q: "Cuplikan drama: \"Ibu: Jangan bohong lagi! Raka: Aku takut dimarahi...\" Konflik utama cuplikan tersebut adalah...",
+        options: ["Pertentangan kejujuran anak dan rasa takut pada ibu", "Persaingan jabatan di kantor", "Perang antarwilayah", "Perebutan warisan keluarga"],
+        answer: 0,
+        explain: "Konflik terjadi pada benturan sikap: kejujuran lawan ketakutan."
+      },
+      {
+        module: "bindo",
+        level: "Dasar",
+        q: "Bagian drama saat masalah mencapai puncak ketegangan disebut...",
+        options: ["Klimaks", "Orientasi", "Epilog", "Prolog"],
+        answer: 0,
+        explain: "Klimaks adalah titik puncak konflik dalam struktur alur drama."
+      },
+      {
+        module: "bindo",
+        level: "Menengah",
+        q: "Aktor memerankan tokoh marah, tetapi suara pelan datar dan wajah tersenyum. Penilaian paling tepat adalah...",
+        options: ["Ekspresi dan vokal tidak selaras dengan karakter", "Akting sangat meyakinkan", "Penghayatan terlalu dalam", "Blocking panggung sempurna"],
+        answer: 0,
+        explain: "Akting yang baik menuntut keselarasan ekspresi, vokal, dan penghayatan."
+      },
+      {
+        module: "bindo",
+        level: "Menengah",
+        q: "Saat tampil, aktor lupa dialog lalu menyesuaikan ucapan tanpa mengubah alur cerita. Tindakan ini disebut...",
+        options: ["Improvisasi", "Resolusi", "Monolog", "Epilog"],
+        answer: 0,
+        explain: "Improvisasi adalah penyesuaian spontan yang tetap menjaga arah cerita."
+      },
+      {
+        module: "bindo",
+        level: "Dasar",
+        q: "Jenis drama tanpa dialog verbal yang mengandalkan gerak tubuh dan mimik wajah adalah...",
+        options: ["Pantomim", "Komedi", "Tragedi", "Opera"],
+        answer: 0,
+        explain: "Pantomim menyampaikan cerita melalui gerak dan ekspresi tanpa kata-kata."
+      },
+      {
+        module: "bindo",
+        level: "Dasar",
+        q: "Ciri yang paling membedakan naskah drama dari cerpen adalah...",
+        options: ["Dominan dialog dan petunjuk laku panggung", "Selalu menggunakan sudut pandang orang pertama", "Paragraf narasi panjang tanpa percakapan", "Tidak memiliki konflik"],
+        answer: 0,
+        explain: "Naskah drama dirancang untuk dipentaskan, sehingga dialog dan petunjuk laku dominan."
+      },
+      {
+        module: "bindo",
+        level: "Dasar",
+        q: "Dalam karya ilmiah, bagian yang menjelaskan alasan pentingnya penelitian dilakukan adalah...",
+        options: ["Latar belakang", "Daftar pustaka", "Lampiran", "Abstrak"],
+        answer: 0,
+        explain: "Latar belakang memuat urgensi dan konteks masalah penelitian."
+      },
+      {
+        module: "bindo",
+        level: "Menengah",
+        q: "Pernyataan \"Semakin tinggi intensitas membaca, semakin baik keterampilan menulis siswa\" termasuk bagian...",
+        options: ["Hipotesis", "Kesimpulan", "Saran", "Daftar pustaka"],
+        answer: 0,
+        explain: "Hipotesis adalah dugaan sementara yang diuji melalui penelitian."
+      },
+      {
+        module: "bindo",
+        level: "Dasar",
+        q: "Kalimat yang paling mencerminkan bahasa ilmiah adalah...",
+        options: ["Data menunjukkan peningkatan 18% pada kelompok eksperimen.", "Menurutku hasilnya keren banget.", "Metodenya paling oke untuk semua kondisi.", "Penelitian ini super hebat dan luar biasa."],
+        answer: 0,
+        explain: "Bahasa ilmiah bersifat objektif, baku, dan berbasis data."
+      },
+      {
+        module: "bindo",
+        level: "Menengah",
+        q: "Tindakan yang tergolong plagiarisme adalah...",
+        options: ["Mengutip kalimat orang lain tanpa mencantumkan sumber", "Parafrase lalu menyebut sumber", "Menulis opini pribadi", "Merangkum data milik sendiri"],
+        answer: 0,
+        explain: "Mengambil gagasan/kalimat tanpa sitasi memadai termasuk plagiarisme."
+      },
+      {
+        module: "bindo",
+        level: "Menengah",
+        q: "Kriteria penulisan ilmiah yang baik adalah...",
+        options: ["Sistematis, logis, berbasis data, dan konsisten sitasi", "Subjektif, emosional, dan bebas struktur", "Banyak opini pribadi agar menarik", "Menggunakan bahasa gaul agar mudah dipahami"],
+        answer: 0,
+        explain: "Karya ilmiah yang baik harus runtut, objektif, dan dapat dipertanggungjawabkan."
       }
     ];
 
@@ -1597,6 +1745,22 @@
           return "Soal ini memakai konteks bacaan singkat. Fokus pada ide utama dan informasi paling jelas yang langsung mendukung jawaban.";
         }
         return "Kamu sedang mengerjakan latihan grammar dan reading. Pilih struktur bahasa Inggris yang paling tepat sesuai situasi pada soal.";
+      }
+
+      if (question.module === "bindo") {
+        if (q.includes("puisi") || q.includes("diksi") || q.includes("majas") || q.includes("konotatif") || q.includes("amanat")) {
+          return "Di kelas Bahasa Indonesia, siswa diminta mengapresiasi puisi secara utuh: memilih kata, memahami simbol, lalu menafsirkan pesan yang tersirat.";
+        }
+        if (q.includes("intonasi") || q.includes("tempo") || q.includes("ekspresi") || q.includes("dibaca")) {
+          return "Kamu sedang gladi pembacaan puisi untuk penilaian praktik. Teknik vokal, tempo, dan ekspresi harus selaras dengan suasana puisi.";
+        }
+        if (q.includes("drama") || q.includes("klimaks") || q.includes("epilog") || q.includes("sutradara") || q.includes("pantomim")) {
+          return "Tim teater sekolah menyiapkan pementasan. Kamu diminta menilai unsur, struktur, serta keputusan artistik agar pertunjukan tetap kuat.";
+        }
+        if (q.includes("karya ilmiah") || q.includes("hipotesis") || q.includes("metode") || q.includes("plagiarisme") || q.includes("ilmiah")) {
+          return "Kelas sedang menyusun karya ilmiah sederhana. Fokusmu adalah ketepatan struktur, objektivitas bahasa, dan etika sitasi sumber.";
+        }
+        return "Soal ini menguji kisi-kisi UAS Bahasa Indonesia: pahami konteks, tentukan konsep yang tepat, lalu pilih jawaban paling logis.";
       }
 
       if (question.module === "pancasila") {
